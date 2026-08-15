@@ -39,11 +39,26 @@ const Styles = () => (
 
     * { cursor: none !important; }
 
-    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--darker); }
-    ::-webkit-scrollbar-thumb { background: var(--red); }
+    ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
 
-    /* ── Animations ── */
+    /* ── Gamer Animations & Page Transitions ── */
+    @keyframes pageEnter {
+      0% { opacity: 0; transform: translateY(18px) scale(0.985); filter: blur(5px); }
+      100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    }
+
+    @keyframes popoutEnter {
+      0% { opacity: 0; transform: translateY(-10px) scale(0.96); filter: blur(4px); }
+      100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    }
+
+    @keyframes qEnter {
+      0% { opacity: 0; transform: translateX(24px) scale(0.985); filter: blur(4px); }
+      100% { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); }
+    }
+
     @keyframes fadeUp  { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
     @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
     @keyframes floatA  { 0%,100%{ transform:translateY(0) rotate(-2deg); } 50%{ transform:translateY(-20px) rotate(1deg); } }
@@ -54,9 +69,11 @@ const Styles = () => (
     @keyframes shimmer { 0%{ background-position:-200% center; } 100%{ background-position:200% center; } }
     @keyframes blink   { 0%,100%{ opacity:1; } 50%{ opacity:0; } }
     @keyframes cornerT { 0%,100%{ opacity:1; } 50%{ opacity:0.25; } }
-    @keyframes slideR  { from{ opacity:0; transform:translateX(30px); } to{ opacity:1; transform:translateX(0); } }
     @keyframes orbDrift{ 0%{ transform:translate(0,0) scale(1); } 33%{ transform:translate(40px,-30px) scale(1.1); } 66%{ transform:translate(-20px,40px) scale(0.9); } 100%{ transform:translate(0,0) scale(1); } }
-    @keyframes diamondPulse { 0%,100%{ transform:scale(1); opacity:1; } 50%{ transform:scale(1.3); opacity:0.5; } }
+
+    .page-enter { animation: pageEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; will-change: transform, opacity, filter; }
+    .popout-enter { animation: popoutEnter 0.28s cubic-bezier(0.16, 1, 0.3, 1) both; transform-origin: top center; will-change: transform, opacity, filter; }
+    .q-enter { animation: qEnter 0.38s cubic-bezier(0.16, 1, 0.3, 1) both; will-change: transform, opacity, filter; }
 
     .fade-up  { animation: fadeUp  0.55s cubic-bezier(.22,1,.36,1) both; }
     .fade-in  { animation: fadeIn  0.4s ease both; }
@@ -64,11 +81,12 @@ const Styles = () => (
     .float-b  { animation: floatB  8.5s ease-in-out infinite; }
     .spin     { animation: spin    1.5s linear infinite; }
 
-    /* Tactical panel with corner notches */
+    /* Tactical panel with smooth hover lifting & glowing notches */
     .panel {
       background: var(--panel);
       border: 1px solid var(--border);
       position: relative;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
     }
     .panel::before, .panel::after {
       content: '';
@@ -76,16 +94,22 @@ const Styles = () => (
       width: 10px; height: 10px;
       border-color: var(--red);
       border-style: solid;
+      transition: border-color 0.3s ease, opacity 0.3s ease;
       animation: cornerT 3s ease-in-out infinite;
     }
     .panel::before { top:-1px; left:-1px; border-width:2px 0 0 2px; }
     .panel::after  { bottom:-1px; right:-1px; border-width:0 2px 2px 0; }
-    .panel:hover { background: var(--panel-h); border-color: rgba(255,70,85,0.2); }
+    .panel:hover {
+      transform: translateY(-4px) scale(1.008);
+      background: var(--panel-h);
+      border-color: rgba(255,70,85,0.4);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 24px rgba(255,70,85,0.18);
+    }
 
     .accent-line   { height:2px; background:linear-gradient(90deg, var(--red), transparent); }
     .accent-line-r { height:2px; background:linear-gradient(270deg, var(--red), transparent); }
 
-    /* Primary button – angled clip */
+    /* Primary button – angled clip with laser glare sweep */
     .btn-primary {
       background: var(--red);
       color: #000;
@@ -95,18 +119,28 @@ const Styles = () => (
       border: none;
       cursor: none;
       clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-      transition: all 0.2s;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease;
       position: relative;
       overflow: hidden;
     }
-    .btn-primary::after {
-      content:'';
-      position:absolute; inset:0;
-      background:rgba(255,255,255,0.15);
-      opacity:0; transition:opacity 0.2s;
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .btn-primary:hover::after { opacity:1; }
-    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(255,70,85,0.5); }
+    .btn-primary:hover::before {
+      left: 140%;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 32px rgba(255,70,85,0.55), 0 0 16px rgba(255,70,85,0.4);
+    }
+    .btn-primary:active {
+      transform: translateY(0) scale(0.98);
+    }
 
     .btn-ghost {
       background: transparent;
@@ -117,25 +151,52 @@ const Styles = () => (
       border: 1px solid rgba(255,255,255,0.18);
       cursor: none;
       clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-      transition: all 0.2s;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
     }
-    .btn-ghost:hover { border-color:var(--red); color:var(--red); box-shadow:0 0 20px rgba(255,70,85,0.2); }
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      border-color: var(--red);
+      color: var(--red);
+      box-shadow: 0 0 24px rgba(255,70,85,0.35);
+    }
+    .btn-ghost:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    /* Option button tile hover & selection transition */
+    .option-btn {
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease, color 0.22s ease !important;
+    }
+    .option-btn:hover {
+      transform: translateY(-2px) scale(1.015);
+      border-color: var(--red) !important;
+      color: var(--white) !important;
+      box-shadow: 0 6px 20px rgba(255, 70, 85, 0.25) !important;
+    }
+    .option-btn:active {
+      transform: translateY(0) scale(0.99);
+    }
 
     /* Range */
     input[type=range] {
       -webkit-appearance:none;
-      width:100%; height:3px;
+      width:100%; height:4px;
       background:rgba(255,255,255,0.1);
       outline:none; cursor:none;
       border-radius:0;
+      transition: background 0.2s;
     }
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance:none;
-      width:14px; height:14px;
+      width:16px; height:16px;
       background:var(--red);
       clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);
       cursor:none;
-      box-shadow:0 0 6px var(--red);
+      box-shadow:0 0 10px var(--red);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    input[type=range]:hover::-webkit-slider-thumb {
+      transform: scale(1.25);
     }
 
     /* Grid background */
@@ -166,6 +227,12 @@ const Styles = () => (
       color:var(--red);
       clip-path:polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
       letter-spacing:1px;
+      transition: all 0.2s ease;
+    }
+    .chip:hover {
+      border-color: var(--red);
+      background: rgba(255,70,85,0.18);
+      box-shadow: 0 0 12px rgba(255,70,85,0.3);
     }
 
     /* Score ring */
@@ -178,7 +245,7 @@ const Styles = () => (
       will-change: left, top;
     }
 
-    /* Nav link hover */
+    /* Nav link smooth underline sweep */
     .nav-link {
       color: var(--grey);
       font-family: var(--font-m);
@@ -187,10 +254,25 @@ const Styles = () => (
       background: none;
       border: none;
       cursor: none;
-      transition: color 0.2s;
+      transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       text-decoration: none;
+      position: relative;
+      padding: 4px 0;
     }
-    .nav-link:hover { color: var(--red); }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; width: 0%; height: 2px;
+      background: var(--red);
+      box-shadow: 0 0 10px var(--red);
+      transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--white);
+    }
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
 
     /* Store link buttons */
     .store-link {
@@ -200,19 +282,29 @@ const Styles = () => (
       font-size: 0.85rem;
       letter-spacing: 2px;
       clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
-      transition: all 0.2s;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease, color 0.25s ease;
       display: inline-block;
     }
-    .store-link:hover { transform: translateY(-1px); }
-    .store-steam { background: linear-gradient(135deg, rgba(23,26,33,0.95), rgba(42,71,94,0.85)); border: 1px solid rgba(102,192,244,0.45); color: #66c0f4; display: inline-flex; align-items: center; gap: 7px; }
-    .store-steam:hover { border-color: #66c0f4; color: #ffffff; box-shadow: 0 4px 18px rgba(102,192,244,0.35); }
+    .store-link:hover {
+      transform: translateY(-2px) scale(1.02);
+    }
+    .store-steam {
+      background: linear-gradient(135deg, rgba(23,26,33,0.95), rgba(42,71,94,0.85));
+      border: 1px solid rgba(102,192,244,0.45);
+      color: #66c0f4;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .store-steam:hover {
+      border-color: #66c0f4;
+      color: #ffffff;
+      box-shadow: 0 6px 22px rgba(102,192,244,0.45);
+    }
     .store-epic  { background:rgba(28,28,28,.5); border:1px solid rgba(80,80,80,.4); color:#bbb; }
-    .store-epic:hover  { border-color:#555; }
+    .store-epic:hover  { border-color:#555; box-shadow: 0 4px 16px rgba(255,255,255,0.15); }
     .store-info  { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); color:var(--grey); }
-    .store-info:hover  { border-color:rgba(255,255,255,.25); color:var(--white); }
-
-    /* Question animation */
-    .q-enter { animation: fadeUp 0.5s cubic-bezier(.22,1,.36,1) both; }
+    .store-info:hover  { border-color:rgba(255,255,255,.25); color:var(--white); box-shadow: 0 4px 16px rgba(255,255,255,0.1); }
 
     /* Mobile adjustments */
     @media (max-width: 640px) {
@@ -474,11 +566,12 @@ const SearchSelect = ({ placeholder, options, selected, onSelect, onRemove }) =>
         />
       </div>
       {open && filtered.length > 0 && (
-        <div style={{
-          position:"absolute",top:"calc(100% + 4px)",left:0,right:0,
+        <div className="popout-enter" style={{
+          position:"absolute",top:"calc(100% + 6px)",left:0,right:0,
           background:"rgba(10,16,24,0.98)",
-          border:"1px solid rgba(255,70,85,0.22)",
-          zIndex:200,boxShadow:"0 18px 50px rgba(0,0,0,0.7)",
+          backdropFilter:"blur(16px)",
+          border:"1px solid rgba(255,70,85,0.35)",
+          zIndex:200,boxShadow:"0 20px 60px rgba(0,0,0,0.85), 0 0 20px rgba(255,70,85,0.15)",
           clipPath:"polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%)",
         }}>
           {filtered.map(o => (
@@ -488,11 +581,11 @@ const SearchSelect = ({ placeholder, options, selected, onSelect, onRemove }) =>
               style={{
                 padding:"9px 14px",fontSize:"0.95rem",fontFamily:"var(--font-b)",
                 borderBottom:"1px solid rgba(255,255,255,0.04)",
-                transition:"all 0.12s",display:"flex",alignItems:"center",gap:10,
+                transition:"all 0.18s ease",display:"flex",alignItems:"center",gap:10,
                 color:"var(--white)",
               }}
-              onMouseEnter={e => { e.currentTarget.style.background="rgba(255,70,85,0.1)"; e.currentTarget.style.color="var(--red)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background="transparent"; e.currentTarget.style.color="var(--white)"; }}
+              onMouseEnter={e => { e.currentTarget.style.background="rgba(255,70,85,0.15)"; e.currentTarget.style.color="var(--red)"; e.currentTarget.style.paddingLeft="18px"; }}
+              onMouseLeave={e => { e.currentTarget.style.background="transparent"; e.currentTarget.style.color="var(--white)"; e.currentTarget.style.paddingLeft="14px"; }}
             >
               <span style={{ width:5,height:5,clipPath:"polygon(50% 0%,100% 50%,50% 100%,0% 50%)",
                 background:"var(--red)",display:"inline-block",flexShrink:0,opacity:0.7 }}/>
@@ -510,6 +603,7 @@ const SearchSelect = ({ placeholder, options, selected, onSelect, onRemove }) =>
 ───────────────────────────────────────────────────────────────────────── */
 const OptionBtn = ({ label, selected, onClick }) => (
   <button
+    className="option-btn"
     onClick={onClick}
     style={{
       padding:"13px 14px",
@@ -1263,7 +1357,7 @@ Rules:
      LANDING PAGE
   ════════════════════════════════════════════════════════════════════ */
   if (page === "landing") return (
-    <div style={{ minHeight:"100vh", background:"var(--darker)", position:"relative", overflow:"hidden" }}>
+    <div className="page-enter" style={{ minHeight:"100vh", background:"var(--darker)", position:"relative", overflow:"hidden" }}>
       <Styles/>
       <Crosshair/>
       <Scanline/>
@@ -1517,7 +1611,7 @@ Rules:
     };
 
     return (
-      <div style={{ minHeight:"100vh",background:"var(--darker)",position:"relative" }}>
+      <div className="page-enter" style={{ minHeight:"100vh",background:"var(--darker)",position:"relative" }}>
         <Styles/>
         <Crosshair/>
         <Scanline/>
@@ -1594,7 +1688,7 @@ Rules:
      LOADING PAGE
   ════════════════════════════════════════════════════════════════════ */
   if (page === "loading") return (
-    <div style={{
+    <div className="page-enter" style={{
       minHeight:"100vh",background:"var(--darker)",
       display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
       position:"relative",
@@ -1679,7 +1773,7 @@ Rules:
     ];
 
     return (
-      <div style={{ minHeight:"100vh",background:"var(--darker)",position:"relative" }}>
+      <div className="page-enter" style={{ minHeight:"100vh",background:"var(--darker)",position:"relative" }}>
         <Styles/>
         <Crosshair/>
         <Scanline/>
@@ -1905,7 +1999,7 @@ Rules:
     });
 
     return (
-      <div style={{ minHeight:"100vh",background:"var(--darker)",position:"relative" }}>
+      <div className="page-enter" style={{ minHeight:"100vh",background:"var(--darker)",position:"relative" }}>
         <Styles/>
         <Crosshair/>
         <Scanline/>
