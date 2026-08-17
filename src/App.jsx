@@ -369,6 +369,22 @@ const SteamIcon = ({ size = 15, color = "currentColor" }) => (
 );
 
 /* ─────────────────────────────────────────────────────────────────────────
+   GITHUB & BUG VECTOR ICONS
+───────────────────────────────────────────────────────────────────────── */
+const GithubIcon = ({ size = 15, color = "currentColor" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill={color} style={{ flexShrink:0 }}>
+    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+  </svg>
+);
+
+const BugIcon = ({ size = 15, color = "currentColor" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink:0 }}>
+    <path d="M8 2v4M16 2v4M9 12h6M13 17h-2M3 13h4M17 13h4"/>
+    <rect x="6" y="6" width="12" height="14" rx="4"/>
+  </svg>
+);
+
+/* ─────────────────────────────────────────────────────────────────────────
    GAME COVER FALLBACK GENERATOR
 ───────────────────────────────────────────────────────────────────────── */
 const getGameCover = (key, title) => {
@@ -697,6 +713,173 @@ const Companion = ({ msg, visible }) => {
     </div>
   );
 };
+
+/* ─────────────────────────────────────────────────────────────────────────
+   TACTICAL FOOTER
+───────────────────────────────────────────────────────────────────────── */
+const Footer = ({ onNavigate }) => (
+  <footer style={{
+    position: "relative",
+    zIndex: 10,
+    background: "rgba(10,16,24,0.92)",
+    borderTop: "1px solid rgba(255,70,85,0.18)",
+    backdropFilter: "blur(16px)",
+    padding: "50px 40px 30px",
+    marginTop: "80px",
+  }}>
+    <div style={{ maxWidth: 1180, margin: "0 auto" }}>
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))",
+        gap: 36,
+        marginBottom: 40,
+      }}>
+        {/* Col 1: Brand */}
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+            <svg width={22} height={22} viewBox="0 0 24 24" fill="none">
+              <polygon points="12,2 22,7 22,17 12,22 2,17 2,7" stroke="#FF4655" strokeWidth="1.4" fill="rgba(255,70,85,0.07)"/>
+              <circle cx={12} cy={12} r={3} fill="#FF4655"/>
+            </svg>
+            <span style={{ fontFamily: "var(--font-d)", fontSize: "1.3rem", letterSpacing: 4 }}>
+              GAME<span style={{ color: "var(--red)" }}>MATCH</span> AI
+            </span>
+          </div>
+          <p style={{ fontFamily: "var(--font-b)", fontSize: "0.92rem", color: "var(--grey)", lineHeight: 1.6, marginBottom: 16 }}>
+            Intelligent game discovery platform powered by multi-dimensional preference profiling and AI recommendations.
+          </p>
+          <div className="chip" style={{ fontSize: "0.6rem" }}>
+            // OPEN SOURCE PROJECT
+          </div>
+        </div>
+
+        {/* Col 2: Navigation */}
+        <div>
+          <div style={{ fontFamily: "var(--font-m)", fontSize: "0.68rem", color: "var(--red)", letterSpacing: 2, marginBottom: 16 }}>
+            // NAVIGATION
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <button className="nav-link" style={{ textAlign: "left", width: "fit-content" }} onClick={() => onNavigate("landing")}>HOME</button>
+            <button className="nav-link" style={{ textAlign: "left", width: "fit-content" }} onClick={() => onNavigate("quiz")}>LAUNCH QUIZ</button>
+            <button className="nav-link" style={{ textAlign: "left", width: "fit-content" }} onClick={() => onNavigate("library")}>GAME LIBRARY & STEAM</button>
+          </div>
+        </div>
+
+        {/* Col 3: Community & Issue Reporting */}
+        <div>
+          <div style={{ fontFamily: "var(--font-m)", fontSize: "0.68rem", color: "var(--red)", letterSpacing: 2, marginBottom: 16 }}>
+            // REPORT ISSUES & FEEDBACK
+          </div>
+          <p style={{ fontFamily: "var(--font-b)", fontSize: "0.9rem", color: "var(--grey)", lineHeight: 1.5, marginBottom: 16 }}>
+            Encountered a bug or have feature feedback? Report directly on GitHub.
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <a
+              href="https://github.com/Abhixarvar/gamerecommendationAI/issues/new"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="store-link"
+              style={{
+                background: "rgba(255,70,85,0.12)",
+                border: "1px solid rgba(255,70,85,0.4)",
+                color: "var(--white)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                fontSize: "0.85rem",
+                width: "fit-content",
+              }}
+            >
+              <BugIcon size={15} color="var(--red)" />
+              REPORT AN ISSUE
+            </a>
+            <a
+              href="https://github.com/Abhixarvar/gamerecommendationAI/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-link"
+              style={{ display: "inline-flex", alignItems: "center", gap: 6, width: "fit-content" }}
+            >
+              <GithubIcon size={14} color="var(--grey)" />
+              VIEW OPEN ISSUES
+            </a>
+          </div>
+        </div>
+
+        {/* Col 4: Repository */}
+        <div>
+          <div style={{ fontFamily: "var(--font-m)", fontSize: "0.68rem", color: "var(--red)", letterSpacing: 2, marginBottom: 16 }}>
+            // REPOSITORY
+          </div>
+          <p style={{ fontFamily: "var(--font-b)", fontSize: "0.9rem", color: "var(--grey)", lineHeight: 1.5, marginBottom: 16 }}>
+            View source code, star, or contribute to GameMatch AI.
+          </p>
+          <a
+            href="https://github.com/Abhixarvar/gamerecommendationAI"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="store-link store-steam"
+            style={{
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              color: "var(--white)",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              fontSize: "0.85rem",
+            }}
+          >
+            <GithubIcon size={15} color="var(--white)" />
+            GITHUB REPOSITORY
+          </a>
+        </div>
+      </div>
+
+      <div style={{
+        paddingTop: 24,
+        borderTop: "1px solid rgba(255,255,255,0.06)",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        flexWrap: "wrap",
+        gap: 12,
+        fontFamily: "var(--font-m)",
+        fontSize: "0.65rem",
+        color: "var(--grey)",
+      }}>
+        <div>&copy; {new Date().getFullYear()} GAMEMATCH AI. ALL RIGHTS RESERVED.</div>
+        <div style={{ display: "flex", gap: 16 }}>
+          <a
+            href="https://github.com/Abhixarvar/gamerecommendationAI/issues/new"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--grey)", textDecoration: "none" }}
+          >
+            SUBMIT ISSUE
+          </a>
+          <span>&bull;</span>
+          <a
+            href="https://github.com/Abhixarvar/gamerecommendationAI/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--grey)", textDecoration: "none" }}
+          >
+            ALL ISSUES
+          </a>
+          <span>&bull;</span>
+          <a
+            href="https://github.com/Abhixarvar/gamerecommendationAI"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--grey)", textDecoration: "none" }}
+          >
+            GITHUB REPO
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+);
 
 /* ─────────────────────────────────────────────────────────────────────────
    STATIC DATA
@@ -1390,6 +1573,16 @@ Rules:
         <div style={{ display:"flex",alignItems:"center",gap:20 }}>
           <button className="nav-link" style={{ color: page==="landing" ? "var(--red)" : "var(--grey)" }} onClick={() => setPage("landing")}>HOME</button>
           <button className="nav-link" style={{ color: page==="library" ? "var(--red)" : "var(--grey)" }} onClick={() => setPage("library")}>GAME LIBRARY & STEAM</button>
+          <a
+            href="https://github.com/Abhixarvar/gamerecommendationAI/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-link"
+            style={{ display:"inline-flex",alignItems:"center",gap:6 }}
+          >
+            <GithubIcon size={14} color="var(--grey)" />
+            REPORT ISSUE
+          </a>
           <button className="btn-primary" style={{ padding:"8px 22px" }}
             onClick={() => setPage("quiz")}>
             LAUNCH QUIZ
@@ -1473,6 +1666,8 @@ Rules:
           </div>
         </div>
       </div>
+
+      <Footer onNavigate={setPage} />
     </div>
   );
 
@@ -1620,7 +1815,7 @@ Rules:
 
         <div style={{ position:"relative",zIndex:10,maxWidth:660,margin:"0 auto",padding:"40px 20px 120px" }}>
 
-          {/* Back + logo */}
+          {/* Back + logo + issue reporting */}
           <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6 }}>
             <button onClick={() => setPage("landing")} style={{
               background:"none",border:"none",cursor:"none",
@@ -1630,9 +1825,20 @@ Rules:
               <ScopeArrow dir="left" size={15} color="var(--grey)"/>
               HOME
             </button>
-            <span style={{ fontFamily:"var(--font-d)",fontSize:"1rem",letterSpacing:4,color:"var(--red)" }}>
-              GAMEMATCH AI
-            </span>
+            <div style={{ display:"flex",alignItems:"center",gap:16 }}>
+              <a
+                href="https://github.com/Abhixarvar/gamerecommendationAI/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration:"none", color:"var(--grey)", fontFamily:"var(--font-m)", fontSize:"0.68rem", display:"inline-flex", alignItems:"center", gap:5, letterSpacing:1 }}
+              >
+                <BugIcon size={12} color="var(--red)"/>
+                REPORT ISSUE
+              </a>
+              <span style={{ fontFamily:"var(--font-d)",fontSize:"1rem",letterSpacing:4,color:"var(--red)" }}>
+                GAMEMATCH AI
+              </span>
+            </div>
           </div>
 
           <ProgressBar current={step} total={STEPS.length}/>
@@ -1798,6 +2004,16 @@ Rules:
               <div className="accent-line" style={{ marginTop:8,width:220 }}/>
             </div>
             <div style={{ display:"flex",gap:10,flexWrap:"wrap" }}>
+              <a
+                href="https://github.com/Abhixarvar/gamerecommendationAI/issues/new"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+                style={{ padding:"10px 18px", display:"inline-flex", alignItems:"center", gap:6 }}
+              >
+                <BugIcon size={14} color="var(--red)"/>
+                REPORT ISSUE
+              </a>
               <button className="btn-ghost" style={{ padding:"10px 20px" }}
                 onClick={() => { setStep(0); setPage("quiz"); }}>
                 RETAKE
@@ -1965,6 +2181,8 @@ Rules:
           msg={`Profile confirmed. ${recs.length} matches found. Top match: ${recs[0]?.title}.`}
           visible={true}
         />
+
+        <Footer onNavigate={setPage} />
       </div>
     );
   }
@@ -2026,6 +2244,16 @@ Rules:
           <div style={{ display:"flex",alignItems:"center",gap:20 }}>
             <button className="nav-link" onClick={() => setPage("landing")}>HOME</button>
             <button className="nav-link" style={{ color:"var(--red)" }} onClick={() => setPage("library")}>GAME LIBRARY & STEAM</button>
+            <a
+              href="https://github.com/Abhixarvar/gamerecommendationAI/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-link"
+              style={{ display:"inline-flex",alignItems:"center",gap:6 }}
+            >
+              <GithubIcon size={14} color="var(--grey)" />
+              REPORT ISSUE
+            </a>
             <button className="btn-primary" style={{ padding:"8px 22px" }} onClick={() => setPage("quiz")}>
               LAUNCH QUIZ
             </button>
@@ -2170,6 +2398,8 @@ Rules:
         </div>
 
         <Companion msg={`Showing ${filteredGames.length} games in library. Click 'VIEW ON STEAM' to visit official store pages.`} visible={true}/>
+
+        <Footer onNavigate={setPage} />
       </div>
     );
   }

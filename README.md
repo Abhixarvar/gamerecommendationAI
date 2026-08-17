@@ -45,3 +45,12 @@ Save recommendation history
 Wishlist management
 Share recommendation profiles
 Personalized gaming profile
+
+🐛 Reporting Issues & Feedback
+
+Have you encountered a bug, found missing game data, or want to suggest new features?
+
+- 🐛 [Report a New Issue](https://github.com/Abhixarvar/gamerecommendationAI/issues/new)
+- 📋 [View Existing Issues](https://github.com/Abhixarvar/gamerecommendationAI/issues)
+- ⭐️ [GitHub Repository](https://github.com/Abhixarvar/gamerecommendationAI)
+
