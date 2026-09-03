@@ -835,47 +835,62 @@ const Footer = ({ onNavigate }) => (
         </div>
       </div>
 
+      {/* Help & Support Panel */}
       <div style={{
-        paddingTop: 24,
-        borderTop: "1px solid rgba(255,255,255,0.06)",
+        marginTop: 40,
+        padding: "24px 30px",
+        background: "rgba(255,70,85,0.05)",
+        border: "1px solid rgba(255,70,85,0.2)",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
         flexWrap: "wrap",
-        gap: 12,
-        fontFamily: "var(--font-m)",
-        fontSize: "0.65rem",
-        color: "var(--grey)",
+        gap: 20,
+        clipPath: "polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px))",
       }}>
-        <div>&copy; {new Date().getFullYear()} GAMEMATCH AI. ALL RIGHTS RESERVED.</div>
-        <div style={{ display: "flex", gap: 16 }}>
+        <div>
+          <div style={{ fontFamily: "var(--font-d)", fontSize: "1.2rem", color: "var(--white)", letterSpacing: 2, marginBottom: 6 }}>
+            NEED HELP OR SUPPORT?
+          </div>
+          <p style={{ fontFamily: "var(--font-b)", fontSize: "0.9rem", color: "var(--grey)", margin: 0 }}>
+            Submit an issue, request a feature, or contribute directly on our GitHub repository.
+          </p>
+        </div>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
           <a
             href="https://github.com/Abhixarvar/gamerecommendationAI/issues/new"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--grey)", textDecoration: "none" }}
+            className="btn-primary"
+            style={{ padding: "10px 20px", textDecoration: "none", fontSize: "0.9rem", display: "inline-flex", alignItems: "center", gap: 8 }}
           >
-            SUBMIT ISSUE
+            <BugIcon size={16} color="#000" />
+            SUBMIT TICKET
           </a>
-          <span>&bull;</span>
-          <a
-            href="https://github.com/Abhixarvar/gamerecommendationAI/issues"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: "var(--grey)", textDecoration: "none" }}
-          >
-            ALL ISSUES
-          </a>
-          <span>&bull;</span>
           <a
             href="https://github.com/Abhixarvar/gamerecommendationAI"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--grey)", textDecoration: "none" }}
+            className="btn-ghost"
+            style={{ padding: "10px 20px", textDecoration: "none", fontSize: "0.9rem", display: "inline-flex", alignItems: "center", gap: 8 }}
           >
+            <GithubIcon size={16} color="var(--red)" />
             GITHUB REPO
           </a>
         </div>
+      </div>
+
+      <div style={{
+        marginTop: 30,
+        paddingTop: 20,
+        borderTop: "1px solid rgba(255,255,255,0.06)",
+        textAlign: "center",
+        fontFamily: "var(--font-m)",
+        fontSize: "0.65rem",
+        color: "var(--grey)",
+        letterSpacing: 1
+      }}>
+        &copy; {new Date().getFullYear()} GAMEMATCH AI. ALL RIGHTS RESERVED.
       </div>
     </div>
   </footer>
